@@ -10,5 +10,8 @@ spring:
     init:
       mode: always
 
+webclient:
+  capacity: ${WEBCLIENT_CAPACITY:http://localhost:8083/api/v1/capacity/bootcamp-capacities}
+
 appDescription: "Pragma Reactive Bootcamp"
 appVersion: "1.0.0"

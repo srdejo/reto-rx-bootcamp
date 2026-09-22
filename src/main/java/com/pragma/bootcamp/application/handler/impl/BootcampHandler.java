@@ -21,7 +21,10 @@ public class BootcampHandler implements IBootcampHandler {
 
     @Override
     public Mono<Void> saveBootcamp(BootcampRequestDto bootcampRequestDto) {
-        return bootcampServicePort.saveBootcamp(bootcampRequestMapper.toBootcamp(bootcampRequestDto)).then();
+        return bootcampServicePort.saveBootcamp(
+                bootcampRequestMapper.toBootcamp(bootcampRequestDto),
+                bootcampRequestDto.getCapacitiesIds()
+        ).then();
     }
 
     @Override
