@@ -4,6 +4,7 @@ import com.pragma.bootcamp.domain.exception.CapacityNotFoundException;
 import com.pragma.bootcamp.domain.exception.CapacityServiceUnavailableException;
 import com.pragma.bootcamp.domain.exception.DuplicateCapacityException;
 import com.pragma.bootcamp.domain.exception.InvalidCapacityCountException;
+import com.pragma.bootcamp.domain.exception.InvalidPaginationParameterException;
 import com.pragma.bootcamp.infrastructure.exception.NoDataFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,6 +55,13 @@ public class ControllerAdvisor {
             CapacityServiceUnavailableException ignore) {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.CAPACITY_SERVICE_UNAVAILABLE.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidPaginationParameterException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidPaginationParameterException(
+            InvalidPaginationParameterException ignore) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.INVALID_PAGINATION_PARAMETER.getMessage()));
     }
 
     @ExceptionHandler(WebExchangeBindException.class)
