@@ -55,6 +55,12 @@ public class BootcampUseCase implements IBootcampServicePort {
                 : getPageSortedByCapacityCount(page, size, direction);
     }
 
+    @Override
+    public Mono<Void> deleteBootcamp(Long id) {
+        return capacityClientPort.deleteCapacitiesByBootcampId(id)
+                .then(bootcampPersistencePort.deleteBootcamp(id));
+    }
+
     private Mono<PagedResult<BootcampModel>> getPageSortedByName(int page, int size, SortDirection direction) {
         return bootcampPersistencePort.getBootcampsPageSortedByName(page, size, direction)
                 .collectList()

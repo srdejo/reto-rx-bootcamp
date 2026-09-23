@@ -14,16 +14,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/v1/bootcamp")
+@RequestMapping("/api/v1/bootcamps/")
 @RequiredArgsConstructor
 public class BootcampRestController {
 
@@ -57,5 +52,19 @@ public class BootcampRestController {
             @Parameter(description = "Sort direction", schema = @Schema(allowableValues = {"asc", "desc"}, defaultValue = "asc"))
             @RequestParam(defaultValue = "asc") String direction) {
         return bootcampHandler.getAllBootcamps(page, size, sortBy, direction);
+    }
+
+    @Operation(summary = "Delete a bootcamp")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Bootcamp deleted successfully", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Bootcamp not found", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Invalid bootcamp ID", content = @Content)
+    })
+    @DeleteMapping("{id}")
+    public Mono<ResponseEntity<Void>> deleteBootcamp(
+            @PathVariable Long id) {
+
+        return bootcampHandler.deleteBootcamp(id)
+                .thenReturn(ResponseEntity.noContent().build());
     }
 }

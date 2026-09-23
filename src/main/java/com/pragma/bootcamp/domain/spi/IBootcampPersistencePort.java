@@ -13,4 +13,6 @@ public interface IBootcampPersistencePort {
     Flux<BootcampModel> getBootcampsPageSortedByName(int page, int size, SortDirection direction);
 
     Mono<Long> countBootcamps();
+
+    Mono<Void> deleteBootcamp(Long id);
 }

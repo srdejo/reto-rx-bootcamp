@@ -13,4 +13,6 @@ public interface IBootcampServicePort {
     Mono<BootcampModel> saveBootcamp(BootcampModel bootcampModel, List<Long> capacityIds);
 
     Mono<PagedResult<BootcampModel>> getAllBootcamps(int page, int size, BootcampSortBy sortBy, SortDirection direction);
+
+    Mono<Void> deleteBootcamp(Long id);
 }
