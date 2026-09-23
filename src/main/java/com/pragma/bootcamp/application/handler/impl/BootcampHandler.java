@@ -45,6 +45,11 @@ public class BootcampHandler implements IBootcampHandler {
                 ));
     }
 
+    @Override
+    public Mono<Void> deleteBootcamp(Long id) {
+        return bootcampServicePort.deleteBootcamp(id);
+    }
+
     private <E extends Enum<E>> E parseEnum(Class<E> enumType, String value) {
         try {
             return Enum.valueOf(enumType, value);

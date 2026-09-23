@@ -11,7 +11,7 @@ spring:
       mode: always
 
 webclient:
-  capacity: ${WEBCLIENT_CAPACITY:http://localhost:8083/api/v1/capacity/bootcamp-capacities}
+  capacity: ${WEBCLIENT_CAPACITY:http://localhost:8083/api/v1/bootcamp-capacities}
 
 allowed-origins: ${ALLOWED_ORIGIN:http://localhost:4200}
 

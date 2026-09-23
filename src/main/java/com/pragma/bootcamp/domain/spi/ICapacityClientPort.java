@@ -10,4 +10,6 @@ public interface ICapacityClientPort {
     Mono<Void> associateCapacities(Long bootcampId, List<Long> capacityIds);
 
     Flux<BootcampCapacities> getCapacitiesByBootcampIds(List<Long> bootcampIds);
+
+    Mono<Void> deleteCapacitiesByBootcampId(Long id);
 }

@@ -10,4 +10,6 @@ public interface IBootcampHandler {
     Mono<Void> saveBootcamp(BootcampRequestDto bootcampRequestDto);
 
     Mono<PagedResponseDto<BootcampResponseDto>> getAllBootcamps(int page, int size, String sortBy, String direction);
+
+    Mono<Void> deleteBootcamp(Long id);
 }
