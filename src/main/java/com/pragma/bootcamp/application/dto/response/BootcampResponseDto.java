@@ -11,6 +11,7 @@ import java.util.List;
 public class BootcampResponseDto {
     private Long id;
     private String name;
+    private String description;
     private LocalDate releaseDate;
     private Integer durationDays;
     private List<CapacitySummaryResponseDto> capacities;

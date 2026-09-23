@@ -10,5 +10,6 @@ import java.util.List;
 public class CapacitySummaryResponseDto {
     private Long id;
     private String name;
+    private String description;
     private List<TechnologySummaryResponseDto> technologies;
 }

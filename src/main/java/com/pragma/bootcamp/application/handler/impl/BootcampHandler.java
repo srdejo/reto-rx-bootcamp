@@ -50,6 +50,12 @@ public class BootcampHandler implements IBootcampHandler {
         return bootcampServicePort.deleteBootcamp(id);
     }
 
+    @Override
+    public Mono<BootcampResponseDto> getBootcampById(Long id) {
+        return bootcampServicePort.getBootcampById(id)
+                .map(bootcampResponseMapper::toResponse);
+    }
+
     private <E extends Enum<E>> E parseEnum(Class<E> enumType, String value) {
         try {
             return Enum.valueOf(enumType, value);

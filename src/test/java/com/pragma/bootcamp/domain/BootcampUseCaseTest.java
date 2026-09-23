@@ -3,6 +3,7 @@ package com.pragma.bootcamp.domain;
 import com.pragma.bootcamp.domain.model.BootcampCapacities;
 import com.pragma.bootcamp.domain.model.BootcampModel;
 import com.pragma.bootcamp.domain.model.CapacityModel;
+import com.pragma.bootcamp.domain.model.TechnologyModel;
 import com.pragma.bootcamp.domain.spi.IBootcampPersistencePort;
 import com.pragma.bootcamp.domain.spi.ICapacityClientPort;
 import com.pragma.bootcamp.domain.usecase.BootcampUseCase;
@@ -90,6 +91,25 @@ class BootcampUseCaseTest {
                         .map(capacity -> capacity.getId() + ":" + capacity.getName())
                         .toList()
         );
+    }
+
+    @Test
+    void getBootcampByIdAttachesCapacitiesWithTechnologies() {
+        BootcampModel backend = bootcamp(1L, "Backend Bootcamp");
+        CapacityModel capacity = new CapacityModel(10L, "Backend", "APIs y bases de datos",
+                List.of(new TechnologyModel(100L, "Java")));
+
+        when(port.getBootcampById(1L)).thenReturn(Mono.just(backend));
+        when(capacityClientPort.getCapacitiesByBootcampIds(List.of(1L)))
+                .thenReturn(Flux.just(new BootcampCapacities(1L, List.of(capacity))));
+
+        StepVerifier.create(useCase.getBootcampById(1L))
+                .assertNext(result -> {
+                    assertEquals(1, result.getCapacities().size());
+                    assertEquals("APIs y bases de datos", result.getCapacities().get(0).getDescription());
+                    assertEquals("Java", result.getCapacities().get(0).getTechnologies().get(0).getName());
+                })
+                .verifyComplete();
     }
 
     private void mockBootcampsWithCapacities() {

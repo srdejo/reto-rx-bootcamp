@@ -12,4 +12,6 @@ public interface IBootcampHandler {
     Mono<PagedResponseDto<BootcampResponseDto>> getAllBootcamps(int page, int size, String sortBy, String direction);
 
     Mono<Void> deleteBootcamp(Long id);
+
+    Mono<BootcampResponseDto> getBootcampById(Long id);
 }

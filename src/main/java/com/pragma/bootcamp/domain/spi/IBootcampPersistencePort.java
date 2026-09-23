@@ -15,4 +15,6 @@ public interface IBootcampPersistencePort {
     Mono<Long> countBootcamps();
 
     Mono<Void> deleteBootcamp(Long id);
+
+    Mono<BootcampModel> getBootcampById(Long id);
 }
