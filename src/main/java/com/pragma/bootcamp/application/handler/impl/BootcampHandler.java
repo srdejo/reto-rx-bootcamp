@@ -12,6 +12,7 @@ import com.pragma.bootcamp.domain.util.enums.BootcampSortBy;
 import com.pragma.bootcamp.domain.util.enums.SortDirection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -23,6 +24,7 @@ public class BootcampHandler implements IBootcampHandler {
     private final IBootcampResponseMapper bootcampResponseMapper;
 
     @Override
+    @Transactional
     public Mono<Void> saveBootcamp(BootcampRequestDto bootcampRequestDto) {
         return bootcampServicePort.saveBootcamp(
                 bootcampRequestMapper.toBootcamp(bootcampRequestDto),
@@ -46,6 +48,7 @@ public class BootcampHandler implements IBootcampHandler {
     }
 
     @Override
+    @Transactional
     public Mono<Void> deleteBootcamp(Long id) {
         return bootcampServicePort.deleteBootcamp(id);
     }

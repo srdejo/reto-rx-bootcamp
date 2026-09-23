@@ -12,7 +12,6 @@ import com.pragma.bootcamp.domain.util.DomainConstants;
 import com.pragma.bootcamp.domain.util.PagedResult;
 import com.pragma.bootcamp.domain.util.enums.BootcampSortBy;
 import com.pragma.bootcamp.domain.util.enums.SortDirection;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
@@ -21,7 +20,6 @@ import java.util.List;
 
 import static com.pragma.bootcamp.domain.util.enums.BootcampSortBy.NAME;
 
-@Transactional
 public class BootcampUseCase implements IBootcampServicePort {
 
     private final IBootcampPersistencePort bootcampPersistencePort;
@@ -73,7 +71,7 @@ public class BootcampUseCase implements IBootcampServicePort {
                 .collectList()
                 .zipWith(bootcampPersistencePort.countBootcamps())
                 .flatMap(pageAndCount -> attachCapacities(pageAndCount.getT1())
-                        .map(withCapacities -> toPagedResult(withCapacities, page, size, pageAndCount.getT2())));
+                        .map(withCapacities -> PagedResult.of(withCapacities, page, size, pageAndCount.getT2())));
     }
 
     private Mono<PagedResult<BootcampModel>> getPageSortedByCapacityCount(int page, int size, SortDirection direction) {
@@ -124,11 +122,6 @@ public class BootcampUseCase implements IBootcampServicePort {
                 .limit(size)
                 .toList();
 
-        return toPagedResult(pageContent, page, size, totalElements);
-    }
-
-    private PagedResult<BootcampModel> toPagedResult(List<BootcampModel> pageContent, int page, int size, long totalElements) {
-        int totalPages = (int) Math.ceil((double) totalElements / size);
-        return new PagedResult<>(pageContent, page, size, totalElements, totalPages);
+        return PagedResult.of(pageContent, page, size, totalElements);
     }
 }
