@@ -13,5 +13,7 @@ spring:
 webclient:
   capacity: ${WEBCLIENT_CAPACITY:http://localhost:8083/api/v1/capacity/bootcamp-capacities}
 
+allowed-origins: ${ALLOWED_ORIGIN:http://localhost:4200}
+
 appDescription: "Pragma Reactive Bootcamp"
 appVersion: "1.0.0"

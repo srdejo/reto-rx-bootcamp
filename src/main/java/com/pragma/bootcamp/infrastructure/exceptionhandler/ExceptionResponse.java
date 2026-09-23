@@ -9,7 +9,8 @@ public enum ExceptionResponse {
     INVALID_NUMBER_OF_CAPACITIES_ASSOCIATED("Invalid number of capacities associated with the requested petition"),
     DUPLICATE_CAPACITY_ID("Duplicate capacity id"),
     CAPACITY_NOT_FOUND("One or more capacities do not exist"),
-    CAPACITY_SERVICE_UNAVAILABLE("Capacity service is unavailable, please try again later");
+    CAPACITY_SERVICE_UNAVAILABLE("Capacity service is unavailable, please try again later"),
+    INVALID_PAGINATION_PARAMETER("Invalid pagination or sort parameters");
 
     private final String message;
 
