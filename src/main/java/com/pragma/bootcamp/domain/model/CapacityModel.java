@@ -14,6 +14,7 @@ import java.util.List;
 public class CapacityModel {
     private Long id;
     private String name;
+    private String description;
     private List<TechnologyModel> technologies;
 
     public CapacityModel(Long id, String name) {

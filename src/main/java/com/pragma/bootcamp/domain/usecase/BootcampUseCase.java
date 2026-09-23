@@ -61,6 +61,13 @@ public class BootcampUseCase implements IBootcampServicePort {
                 .then(bootcampPersistencePort.deleteBootcamp(id));
     }
 
+    @Override
+    public Mono<BootcampModel> getBootcampById(Long id) {
+        return bootcampPersistencePort.getBootcampById(id)
+                .flatMap(bootcamp -> attachCapacities(List.of(bootcamp))
+                        .map(List::getFirst));
+    }
+
     private Mono<PagedResult<BootcampModel>> getPageSortedByName(int page, int size, SortDirection direction) {
         return bootcampPersistencePort.getBootcampsPageSortedByName(page, size, direction)
                 .collectList()

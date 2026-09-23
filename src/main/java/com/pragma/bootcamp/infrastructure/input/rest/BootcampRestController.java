@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -29,6 +30,7 @@ public class BootcampRestController {
             @ApiResponse(responseCode = "201", description = "Bootcamp created", content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
     public Mono<ResponseEntity<Void>> saveBootcamp(@Valid @RequestBody BootcampRequestDto bootcampRequestDto) {
         return bootcampHandler.saveBootcamp(bootcampRequestDto)
@@ -60,11 +62,24 @@ public class BootcampRestController {
             @ApiResponse(responseCode = "404", description = "Bootcamp not found", content = @Content),
             @ApiResponse(responseCode = "400", description = "Invalid bootcamp ID", content = @Content)
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{id}")
     public Mono<ResponseEntity<Void>> deleteBootcamp(
             @PathVariable Long id) {
 
         return bootcampHandler.deleteBootcamp(id)
                 .thenReturn(ResponseEntity.noContent().build());
+    }
+
+    @Operation(summary = "Get a bootcamp by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bootcamp found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = BootcampResponseDto.class))),
+            @ApiResponse(responseCode = "404", description = "Bootcamp not found", content = @Content)
+    })
+    @GetMapping("{id}")
+    public Mono<BootcampResponseDto> getBootcampById(@PathVariable Long id) {
+        return bootcampHandler.getBootcampById(id);
     }
 }
